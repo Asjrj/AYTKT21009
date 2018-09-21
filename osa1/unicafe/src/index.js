@@ -9,20 +9,32 @@ class App extends React.Component {
         this.state = {
             hyva: 0,
             neutral: 0,
-            huono: 0
+            huono: 0,
+            keskiarvo: 0,
+            prosentti: 0
         };
     }
 
     handleHyva = () => {
-        this.setState({ hyva: this.state.hyva + 1 })
+        this.setState({ hyva: this.state.hyva + 1 });
+        this.laskeKeskiarvo(this.state.hyva + 1, this.state.neutral, this.state.huono);
     }
 
     handleNeutral = () => {
-        this.setState({ neutral: this.state.neutral + 1 })
+        this.setState({ neutral: this.state.neutral + 1 });
+        this.laskeKeskiarvo(this.state.hyva, this.state.neutral + 1, this.state.huono);
     }
 
     handleHuono = () => {
-        this.setState({ huono: this.state.huono + 1 })
+        this.setState({ huono: this.state.huono + 1 });
+        this.laskeKeskiarvo(this.state.hyva, this.state.neutral, this.state.huono + 1);
+    }
+
+    laskeKeskiarvo = (arg1, arg2, arg3) => {
+        let arvo = Math.round((arg1 - arg3) / (arg1 + arg2 + arg3) * 10) / 10;
+        let pros = Math.round((arg1 / (arg1 + arg2 + arg3)) * 1000) / 10;
+        this.setState({ keskiarvo: arvo });
+        this.setState({ prosentti: pros });
     }
 
     render() {
@@ -36,6 +48,8 @@ class App extends React.Component {
                 <p>Hyvä {this.state.hyva}</p>
                 <p>Neutraali {this.state.neutral}</p>
                 <p>Huono {this.state.huono}</p>
+                <p>Keskiarvo {this.state.keskiarvo}</p>
+                <p>Positiivisia {this.state.prosentti}</p>
             </div>
         )
     }
