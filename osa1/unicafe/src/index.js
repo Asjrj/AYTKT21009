@@ -7,16 +7,28 @@ const Button = (props) => (
     <button onClick={props.handleClick}> {props.text}</button>
 )
 // Statistics huolehtii tilastojen näyttämisestä
-const Statistics = (props) => (
-    <div>
-        <h1>Statistiikka</h1>
-        <Statistic teksti="Hyvä" arvo={props.hyva} />
-        <Statistic teksti="Neutraali" arvo={props.neutraali} />
-        <Statistic teksti="Huono" arvo={props.huono} />
-        <Statistic teksti="Keskiarvo" arvo={props.keskiarvo} />
-        <Statistic teksti="Positiivisia" arvo={props.prosentti} />
-    </div>
-)
+const Statistics = (props) => {
+    if (props.hyva === 0 && props.neutraali === 0 && props.huono === 0) {
+        return (
+            <div>
+                <h1>Statistiikka</h1>
+                <p>Ei yhtään palautetta annettu</p>
+            </div>
+        )
+    } else {
+        return (
+            <div>
+                <h1>Statistiikka</h1>
+                <Statistic teksti="Hyvä" arvo={props.hyva} />
+                <Statistic teksti="Neutraali" arvo={props.neutraali} />
+                <Statistic teksti="Huono" arvo={props.huono} />
+                <Statistic teksti="Keskiarvo" arvo={props.keskiarvo} />
+                <Statistic teksti="Positiivisia" arvo={props.prosentti} />
+            </div>
+        )
+    }
+}
+
 // Statistic huolehtii yksittäisen tilastorivin, esim. keskiarvon näyttämisestä
 const Statistic = (props) => (
     <p>{props.teksti} {props.arvo}</p>
