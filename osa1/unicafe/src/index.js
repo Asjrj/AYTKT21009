@@ -23,11 +23,13 @@ const Statistics = (props) => {
         return (
             <div>
                 <h1>Statistiikka</h1>
+                <table><tbody>
                 <Statistic teksti="Hyvä" arvo={props.hyva} />
                 <Statistic teksti="Neutraali" arvo={props.neutraali} />
                 <Statistic teksti="Huono" arvo={props.huono} />
                 <Statistic teksti="Keskiarvo" arvo={keskiarvo} />
                 <Statistic teksti="Positiivisia" arvo={prosentti} />
+                </tbody></table>
             </div>
         )
     }
@@ -35,7 +37,7 @@ const Statistics = (props) => {
 
 // Statistic huolehtii yksittäisen tilastorivin, esim. keskiarvon näyttämisestä
 const Statistic = (props) => (
-    <p>{props.teksti} {props.arvo}</p>
+    <tr><td>{props.teksti}</td><td>{props.arvo}</td></tr>
 )
 
 
