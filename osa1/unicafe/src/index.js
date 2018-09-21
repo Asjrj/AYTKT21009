@@ -2,6 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 
+// Button vastaa yksittäistä palautteen antonappia
+const Button = (props) => (
+    <button onClick={props.handleClick}> {props.text}</button>
+)
+// Statistics huolehtii tilastojen näyttämisestä
+const Statistics = (props) => (
+    <div>
+        <h1>Statistiikka</h1>
+        <Statistic teksti="Hyvä" arvo={props.hyva} />
+        <Statistic teksti="Neutraali" arvo={props.neutraali} />
+        <Statistic teksti="Huono" arvo={props.huono} />
+        <Statistic teksti="Keskiarvo" arvo={props.keskiarvo} />
+        <Statistic teksti="Positiivisia" arvo={props.prosentti} />
+    </div>
+)
+// Statistic huolehtii yksittäisen tilastorivin, esim. keskiarvon näyttämisestä
+const Statistic = (props) => (
+    <p>{props.teksti} {props.arvo}</p>
+)
+
 class App extends React.Component {
 
     constructor(props) {
@@ -41,15 +61,16 @@ class App extends React.Component {
         return (
             <div>
                 <h1>Anna palautetta</h1>
-                <button onClick={this.handleHyva}>Hyvä</button>
-                <button onClick={this.handleNeutral}>Neutraali</button>
-                <button onClick={this.handleHuono}>Huono</button>
-                <h1>Statistiikka</h1>
-                <p>Hyvä {this.state.hyva}</p>
-                <p>Neutraali {this.state.neutral}</p>
-                <p>Huono {this.state.huono}</p>
-                <p>Keskiarvo {this.state.keskiarvo}</p>
-                <p>Positiivisia {this.state.prosentti}</p>
+                <Button handleClick={this.handleHyva} text="Hyvä" />
+                <Button handleClick={this.handleNeutral} text="Neutraali" />
+                <Button handleClick={this.handleHuono} text="Huono" />
+                <Statistics
+                    hyva={this.state.hyva}
+                    neutraali={this.state.neutral}
+                    huono={this.state.huono}
+                    keskiarvo={this.state.keskiarvo}
+                    prosentti={this.state.prosentti}
+                />
             </div>
         )
     }
