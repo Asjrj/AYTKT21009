@@ -20,10 +20,7 @@ const Otsikko = (props) => {
 
 const Sisalto = (props) => {
     const rivit = () => props.kurssi.osat.map((osa) => <Osa key={osa.id} osa={osa} />);
-    var riveja = 0;
-    for (var i = 0, j = props.kurssi.osat.length; i < j; i++) {
-        riveja += props.kurssi.osat[i].tehtavia;
-    }
+    let riveja = props.kurssi.osat.reduce((x, osa) => x + osa.tehtavia, 0);
 
     return (
         <div>
