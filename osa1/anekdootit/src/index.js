@@ -1,6 +1,38 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+
+const Aanestetyin = (props) => {
+    let summa = 0;
+    let aanestetyin = 0;
+    let aaniMaara = 0;
+    let aanet = props.tila.votes;
+
+    for (let i = 0; i < aanet.length; i++) {
+        summa = summa + aanet[i];
+        if (aanet[i] > aaniMaara) {
+            aaniMaara = aanet[i];
+            aanestetyin = i;
+        }
+    }
+
+    if (summa === 0) {
+        return (
+            <p>No votes have been given yet!</p>
+        )
+    }
+    else {
+        return (
+            <div>
+            <h2>Anecdote with most votes:</h2>
+            <p>{anecdotes[aanestetyin]}</p>
+            <p>has {aaniMaara} votes</p>
+            </div>
+        )
+    }
+}
+
+
 class App extends React.Component {
     constructor(props) {
         super(props)
@@ -18,16 +50,17 @@ class App extends React.Component {
         let lista = this.state.votes;
         let index = this.state.selected;
         lista[index] = lista[index] + 1;
-        this.setState({ votes: lista});
+        this.setState({ votes: lista });
     }
 
     render() {
         return (
             <div>
                 <p>{this.props.anecdotes[this.state.selected]}</p>
-                <p>on {this.state.votes[this.state.selected]} ääntä</p>
-                <button onClick={this.voteThisOne}>Äänestä tätä</button>
-                <button onClick={this.showRandom}>Seuraava</button>
+                <p>has {this.state.votes[this.state.selected]} votes</p>
+                <button onClick={this.voteThisOne}>Vote</button>
+                <button onClick={this.showRandom}>Next anecdote</button>
+                <Aanestetyin tila={this.state} />
             </div>
         )
     }
