@@ -19,10 +19,16 @@ const Otsikko = (props) => {
 }
 
 const Sisalto = (props) => {
-    const rivit = () => props.kurssi.osat.map((osa) => <Osa key={osa.id} osa={osa} />)
+    const rivit = () => props.kurssi.osat.map((osa) => <Osa key={osa.id} osa={osa} />);
+    var riveja = 0;
+    for (var i = 0, j = props.kurssi.osat.length; i < j; i++) {
+        riveja += props.kurssi.osat[i].tehtavia;
+    }
+
     return (
         <div>
             {rivit()}
+            <p>yhteensä {riveja} tehtävää</p>
         </div>
     )
 }
@@ -53,8 +59,8 @@ const App = () => {
                 id: 3
             },
             {
-                nimi: 'Uusi kurssi',
-                tehtavia: 11,
+                nimi: 'Redux',
+                tehtavia: 7,
                 id: 4
             }
         ]
