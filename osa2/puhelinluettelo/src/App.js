@@ -19,9 +19,12 @@ class App extends React.Component {
 
   handleAdd = (event) => {
     event.preventDefault();
-    const newPerson = {name: this.state.newName};
-    const newPersons = this.state.persons.concat(newPerson);
-    this.setState({persons: newPersons});
+    let namesFound = this.state.persons.filter((x) => x.name === this.state.newName);
+    if (namesFound.length === 0) {
+      let newPerson = { name: this.state.newName };
+      const newPersons = this.state.persons.concat(newPerson);
+      this.setState({ persons: newPersons });
+    }
   }
 
   render() {
@@ -30,7 +33,7 @@ class App extends React.Component {
         <h2>Puhelinluettelo</h2>
         <form>
           <div>
-            nimi: <input value={this.state.newName} onChange={this.handleNameChange}/>
+            nimi: <input value={this.state.newName} onChange={this.handleNameChange} />
           </div>
           <div>
             <button type="submit" onClick={this.handleAdd}>lisää</button>
@@ -38,7 +41,7 @@ class App extends React.Component {
         </form>
         <h2>Numerot</h2>
         <ul>
-        {this.state.persons.map((person) => <li key={person.name}>{person.name}</li>)}
+          {this.state.persons.map((person) => <li key={person.name}>{person.name}</li>)}
         </ul>
       </div>
     )
