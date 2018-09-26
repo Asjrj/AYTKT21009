@@ -16,7 +16,7 @@ const Maat = (props) => {
         <h2>{country.name}</h2>
         <p>Capital: {country.capital}</p>
         <p>Population: {country.population}</p>
-        <img src={country.flag} alt="Flag" height="100" width="180"/>
+        <img src={country.flag} alt="Flag" height="100" width="180" />
       </div>
     )
   }
@@ -29,7 +29,7 @@ const Maat = (props) => {
     return (
       <table>
         <tbody>
-          {props.tila.filtered.map((country) => <tr key={country.name}><td>{country.name}</td></tr>)}
+          {props.tila.filtered.map((country) => <tr key={country.name} onClick={props.handleClick}><td id={country.name}>{country.name}</td></tr>)}
         </tbody>
       </table>
     )
@@ -60,6 +60,14 @@ class App extends Component {
     this.setState({ filtered: filteredList });
   }
 
+  handleClick = () => {
+    return (event) => {
+      let name = event.target.id;
+      let filteredList = this.state.countries.filter((c) => c.name.toUpperCase().includes(name.toUpperCase()));
+      this.setState({ filtered: filteredList });
+    }
+  }
+
   componentDidMount() {
     axios
       .get('https://restcountries.eu/rest/v2/all')
@@ -73,7 +81,7 @@ class App extends Component {
       <div>
         <h1>Maat</h1>
         <p>Find countries: <input value={this.state.country} onChange={this.handleFilterChange} /></p>
-        <Maat tila={this.state} />
+        <Maat tila={this.state} handleClick={this.handleClick()} />
       </div>
     );
   }
