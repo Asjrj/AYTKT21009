@@ -81,11 +81,24 @@ class App extends React.Component {
         };
         dataService.addPersonToServer(newPerson)
           .then(response => {
-            newPerson.id = response.id;
-            let newPersons = this.state.persons.concat(newPerson);
-            this.setState({ persons: newPersons });
-            this.filterPersons(this.state.filterName, newPersons);
+            newPerson.id = response.id
+            let newPersons = this.state.persons.concat(newPerson)
+            this.setState({ persons: newPersons })
+            this.filterPersons(this.state.filterName, newPersons)
           })
+      }
+      else {
+        if (window.confirm(`${this.state.newName} on jo luettelossa, korvataanko vanha numero uudella?`)) {
+          let person = namesFound[0]
+          person.number = this.state.newNumber
+          dataService.updatePhoneNumber(person)
+          let newPersons = this.state.persons.map((x) => {
+            if (x.id === person.id)
+              return (person)
+            else return (x)
+          })
+          this.setState({ persons: newPersons })
+        }
       }
     }
   }
@@ -93,7 +106,7 @@ class App extends React.Component {
   handleRemove = (person) => {
     return (event) => {
       event.preventDefault()
-      if (window.confirm(`Poistetaanko ${person.name}`)){
+      if (window.confirm(`Poistetaanko ${person.name}`)) {
         let otherPersons = this.state.persons.filter(n => n.id !== person.id)
         dataService.deletePerson(person.id)
         this.setState({ persons: otherPersons })
