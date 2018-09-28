@@ -92,8 +92,13 @@ class App extends React.Component {
         let newPersons = this.state.persons.concat(newPerson);
         this.setState({ persons: newPersons });
         this.filterPersons(this.state.filterName, newPersons);
+        this.addPersonToServer(newPerson);
       }
     }
+  }
+
+  addPersonToServer(newPerson){
+    axios.post('http://localhost:3001/persons', newPerson);
   }
 
   componentDidMount() {
