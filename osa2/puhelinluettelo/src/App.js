@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
-import axios from 'axios'
-
+import dataService from './services/persons'
 
 const UusiHenkilo = (props) => {
   return (
@@ -92,20 +91,15 @@ class App extends React.Component {
         let newPersons = this.state.persons.concat(newPerson);
         this.setState({ persons: newPersons });
         this.filterPersons(this.state.filterName, newPersons);
-        this.addPersonToServer(newPerson);
+        dataService.addPersonToServer(newPerson);
       }
     }
   }
 
-  addPersonToServer(newPerson){
-    axios.post('http://localhost:3001/persons', newPerson);
-  }
-
   componentDidMount() {
-    axios
-      .get('http://localhost:3001/persons')
+    dataService.getPersons()
       .then(response => {
-        this.setState({ persons: response.data })
+        this.setState({ persons: response })
       })
   }
 
