@@ -2,6 +2,18 @@ import React from 'react';
 import './App.css';
 import dataService from './services/persons'
 
+
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+  return (
+    <div className="info">
+      {message}
+    </div>
+  )
+}
+
 const UusiHenkilo = (props) => {
   return (
     <form>
@@ -36,7 +48,8 @@ class App extends React.Component {
       newName: '',
       newNumber: '',
       filterName: '',
-      filteredPersons: []
+      filteredPersons: [],
+      info: null
     }
   }
 
@@ -54,8 +67,8 @@ class App extends React.Component {
   }
 
   handleFilterChange = (event) => {
-    this.setState({ filterName: event.target.value });
-    this.filterPersons(event.target.value, this.state.persons);
+    this.setState({ filterName: event.target.value })
+    this.filterPersons(event.target.value, this.state.persons)
   }
 
   filterPersons(name, personList) {
@@ -84,6 +97,7 @@ class App extends React.Component {
             newPerson.id = response.id
             let newPersons = this.state.persons.concat(newPerson)
             this.setState({ persons: newPersons })
+            this.showInfo(`${newPerson.name} on lisätty`);
             this.filterPersons(this.state.filterName, newPersons)
           })
       }
@@ -98,6 +112,7 @@ class App extends React.Component {
             else return (x)
           })
           this.setState({ persons: newPersons })
+          this.showInfo(`${person.name} numero on muutettu: ${person.number}`)
         }
       }
     }
@@ -110,9 +125,17 @@ class App extends React.Component {
         let otherPersons = this.state.persons.filter(n => n.id !== person.id)
         dataService.deletePerson(person.id)
         this.setState({ persons: otherPersons })
-        this.filterPersons(this.state.filterName, otherPersons);
+        this.filterPersons(this.state.filterName, otherPersons)
+        this.showInfo(`${person.name} on poistettu`)
       }
     }
+  }
+
+  showInfo(message) {
+    this.setState({ info: message })
+    setTimeout(() => {
+      this.setState({ info: null })
+    }, 3000)
   }
 
   componentDidMount() {
@@ -132,6 +155,7 @@ class App extends React.Component {
     return (
       <div>
         <h2>Puhelinluettelo</h2>
+        <Notification message={this.state.info} />
         <p>rajaa näytettäviä:
           <input value={this.state.filterName}
             onChange={this.handleFilterChange}
