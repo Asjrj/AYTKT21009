@@ -17,26 +17,16 @@ const UusiHenkilo = (props) => {
   )
 }
 
-const Luettelo = (props) => {
-  if (props.tila.filteredPersons.length === 0) {
-    return (
-      <table>
-        <tbody>
-          {props.tila.persons.map((person) => <tr key={person.name}><td>{person.name}</td><td>{person.number}</td></tr>)}
-        </tbody>
-      </table>
-    )
-  }
-  else {
-    return (
-      <table>
-        <tbody>
-          {props.tila.filteredPersons.map((person) => <tr key={person.name}><td>{person.name}</td><td>{person.number}</td></tr>)}
-        </tbody>
-      </table>
-    )
-  }
+const Rivi = (props) => {
+  return (
+    <tr >
+      <td>{props.person.name}</td>
+      <td>{props.person.number}</td>
+      <td><button type="submit" onClick={props.handleRemove}>Poista</button></td>
+    </tr>
+  )
 }
+
 
 class App extends React.Component {
   constructor(props) {
@@ -85,13 +75,29 @@ class App extends React.Component {
       let namesFound = this.state.persons.filter((x) => x.name === this.state.newName);
       if (namesFound.length === 0) {
         let newPerson = {
+          id: 0,
           name: this.state.newName,
-          number: this.state.newNumber,
+          number: this.state.newNumber
         };
-        let newPersons = this.state.persons.concat(newPerson);
-        this.setState({ persons: newPersons });
-        this.filterPersons(this.state.filterName, newPersons);
-        dataService.addPersonToServer(newPerson);
+        dataService.addPersonToServer(newPerson)
+          .then(response => {
+            newPerson.id = response.id;
+            let newPersons = this.state.persons.concat(newPerson);
+            this.setState({ persons: newPersons });
+            this.filterPersons(this.state.filterName, newPersons);
+          })
+      }
+    }
+  }
+
+  handleRemove = (person) => {
+    return (event) => {
+      event.preventDefault()
+      if (window.confirm(`Poistetaanko ${person.name}`)){
+        let otherPersons = this.state.persons.filter(n => n.id !== person.id)
+        dataService.deletePerson(person.id)
+        this.setState({ persons: otherPersons })
+        this.filterPersons(this.state.filterName, otherPersons);
       }
     }
   }
@@ -104,16 +110,33 @@ class App extends React.Component {
   }
 
   render() {
+    let luettelo = []
+    if (this.state.filteredPersons.length === 0)
+      luettelo = this.state.persons
+    else
+      luettelo = this.state.filteredPersons
+
     return (
       <div>
         <h2>Puhelinluettelo</h2>
-        <p>rajaa näytettäviä: <input value={this.state.filterName} onChange={this.handleFilterChange} /></p>
+        <p>rajaa näytettäviä:
+          <input value={this.state.filterName}
+            onChange={this.handleFilterChange}
+          /></p>
         <UusiHenkilo tila={this.state}
           handleNameChange={this.handleNameChange()}
           handleNumberChange={this.handleNumberChange()}
           handleAdd={this.handleAdd()} />
         <h2>Numerot</h2>
-        <Luettelo tila={this.state} />
+        <table>
+          <tbody>
+            {luettelo.map((person) => {
+              return (<Rivi key={person.name} person={person} handleRemove={this.handleRemove(person)} />
+              )
+            }
+            )}
+          </tbody>
+        </table>
       </div>
     )
   }

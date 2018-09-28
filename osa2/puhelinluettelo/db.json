@@ -21,24 +21,14 @@
       "id": 4
     },
     {
-      "name": "uusi nimi",
-      "number": "123",
+      "name": "Janne Ojala",
+      "number": "045-11111",
       "id": 5
     },
     {
-      "name": "Janne Ojala",
-      "number": "555555555",
+      "name": "Ville Virtanen",
+      "number": "050-6666",
       "id": 6
-    },
-    {
-      "name": "aaa bbb",
-      "number": "99999999",
-      "id": 7
-    },
-    {
-      "name": "cccc",
-      "number": "c8888",
-      "id": 8
     }
   ]
 }

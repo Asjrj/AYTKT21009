@@ -7,7 +7,12 @@ const getPersons = () => {
 }
 
 const addPersonToServer = (newPerson) => {
-    axios.post(baseUrl, newPerson)
+    return axios.post(baseUrl, newPerson)
+        .then(response => response.data)
 }
 
-export default { getPersons, addPersonToServer }
+const deletePerson = (id) => {
+    axios.delete(`${baseUrl}/${id}`)
+}
+
+export default { getPersons, addPersonToServer, deletePerson }
