@@ -105,14 +105,23 @@ class App extends React.Component {
         if (window.confirm(`${this.state.newName} on jo luettelossa, korvataanko vanha numero uudella?`)) {
           let person = namesFound[0]
           person.number = this.state.newNumber
+
           dataService.updatePhoneNumber(person)
-          let newPersons = this.state.persons.map((x) => {
-            if (x.id === person.id)
-              return (person)
-            else return (x)
-          })
-          this.setState({ persons: newPersons })
-          this.showInfo(`${person.name} numero on muutettu: ${person.number}`)
+            .then(response => {
+              let newPersons = this.state.persons.map((x) => {
+                if (x.id === person.id)
+                  return (person)
+                else return (x)
+              })
+              this.setState({ persons: newPersons })
+              this.showInfo(`${person.name} numero on muutettu: ${person.number}`)
+            })
+            .catch(error => {
+              this.showInfo(`${person.name} on jo poistettu palvelimelta`)
+              let otherPersons = this.state.persons.filter(n => n.id !== person.id)
+              this.setState({ persons: otherPersons })
+              this.filterPersons(this.state.filterName, otherPersons)
+            })
         }
       }
     }

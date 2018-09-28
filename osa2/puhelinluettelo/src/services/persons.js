@@ -16,7 +16,7 @@ const deletePerson = (id) => {
 }
 
 const updatePhoneNumber = (person) => {
-    axios.put(`${baseUrl}/${person.id}`, person)
+    return axios.put(`${baseUrl}/${person.id}`, person)
 }
 
 export default { getPersons, addPersonToServer, deletePerson, updatePhoneNumber }
