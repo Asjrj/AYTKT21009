@@ -1,6 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'https://puhback-yerghltpig.now.sh/api/persons/'
-//const baseUrl = 'http://localhost:3001/api/persons'
+const baseUrl = '/api/persons'
 
 const getPersons = () => {
     return axios.get(baseUrl)
