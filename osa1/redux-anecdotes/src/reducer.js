@@ -28,7 +28,7 @@ const reducer = (state = initialState, action) => {
       let newState = state.slice()
       let anecdote = newState.find(element => element.id === action.id)
       anecdote.votes++
-      return newState
+      return newState.sort((a, b) => a.votes > b.votes ? -1 : (a.votes < b.votes ? 1 : 0))
     default:
       return state
   }
