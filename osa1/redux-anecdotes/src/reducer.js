@@ -23,12 +23,20 @@ const reducer = (state = initialState, action) => {
   console.log('state now: ', state)
   console.log('action', action)
 
+  let newState = state.slice()
   switch (action.type) {
     case 'VOTE':
-      let newState = state.slice()
       let anecdote = newState.find(element => element.id === action.id)
       anecdote.votes++
       return newState.sort((a, b) => a.votes > b.votes ? -1 : (a.votes < b.votes ? 1 : 0))
+    case 'ADD':
+      if (action.anecdote !== undefined && action.anecdote !== '') {
+        newState.push(asObject(action.anecdote))
+        return newState
+      }
+      else {
+        return state
+      }
     default:
       return state
   }
