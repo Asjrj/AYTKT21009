@@ -1,7 +1,6 @@
-const notification = 'render here notification...'
+const notification = ''
 
 const notificationReducer = (state = notification, action) => {
-  console.log('*** notificationReducer:', action.type)
   switch (action.type) {
     case 'NOTIFY':
       return action.message
@@ -18,5 +17,10 @@ export const notificationCreation = (text) => {
     message: text
   }
 }
-
+export const notificationClear = () => {
+  return {
+    type: 'CLEAR',
+    message: ''
+  }
+}
 export default notificationReducer
