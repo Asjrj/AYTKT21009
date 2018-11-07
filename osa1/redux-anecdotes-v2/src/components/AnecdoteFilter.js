@@ -1,10 +1,11 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { filterCreation } from '../reducers/filterReducer'
 
 
 class AnecdoteFilter extends React.Component {
   handleChange = (event) => {
-    this.props.store.dispatch(filterCreation(event.target.value))
+    this.props.filterCreation(event.target.value)
   }
 
   render() {
@@ -19,4 +20,8 @@ class AnecdoteFilter extends React.Component {
   }
 }
 
-export default AnecdoteFilter
+const mapDispatchToProps = {
+  filterCreation
+}
+const ConnectedAnecdoteFilter = connect(null, mapDispatchToProps )(AnecdoteFilter)
+export default ConnectedAnecdoteFilter
