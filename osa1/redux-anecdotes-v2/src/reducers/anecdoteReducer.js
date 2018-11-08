@@ -35,10 +35,13 @@ export const anecdoteCreation = (text) => {
     content: text
   }
 }
-export const anecdoteInitialization = (data) => {
-  return {
-    type: 'INITIALIZE',
-    data: data
+export const initializeAnecdotes = () => {
+  return async (dispatch) => {
+    const notes = await anecdoteService.getAll()
+    dispatch({
+      type: 'INITIALIZE',
+      data: notes
+    })
   }
 }
 
