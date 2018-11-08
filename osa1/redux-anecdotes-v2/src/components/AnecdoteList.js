@@ -5,9 +5,9 @@ import { notificationCreation, notificationClear } from '../reducers/notificatio
 
 
 class AnecdoteList extends React.Component {
-  vote = (id, content) => () => {
-    this.props.anecdoteVote(id)
-    this.props.notificationCreation('you voted: "' + content + '"')
+  vote = (anecdote) => () => {
+    this.props.anecdoteVote(anecdote)
+    this.props.notificationCreation('you voted: "' + anecdote.content + '"')
     setTimeout(() => {
       this.props.notificationClear()
     }, 5000)
@@ -24,7 +24,7 @@ class AnecdoteList extends React.Component {
             </div>
             <div>
               has {anecdote.votes}
-              <button onClick={this.vote(anecdote.id, anecdote.content)}>
+              <button onClick={this.vote(anecdote)}>
                 vote
               </button>
             </div>

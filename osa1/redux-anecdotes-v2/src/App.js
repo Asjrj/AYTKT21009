@@ -8,7 +8,7 @@ import { initializeAnecdotes } from './reducers/anecdoteReducer'
 
 
 class App extends React.Component {
-  componentDidMount = async () => {
+  componentDidMount() {
     this.props.initializeAnecdotes()
   }
 
