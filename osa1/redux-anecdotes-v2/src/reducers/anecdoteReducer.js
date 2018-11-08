@@ -1,3 +1,5 @@
+import anecdoteService from '../services/anecdotes'
+
 const getId = () => (100000 * Math.random()).toFixed(0)
 
 const anecdoteReducer = (store = [], action) => {
@@ -8,7 +10,9 @@ const anecdoteReducer = (store = [], action) => {
     return anecdotes.sort((a, b) => a.votes > b.votes ? -1 : (a.votes < b.votes ? 1 : 0))
   }
   if (action.type === 'CREATE') {
-    return [...store, { content: action.content, id: getId(), votes: 0 }]
+    const newAnecdote = { content: action.content, id: getId(), votes: 0 }
+    anecdoteService.saveAnecdote(newAnecdote)
+    return [...store, newAnecdote]
   }
   if (action.type === 'INITIALIZE') {
     return action.data
