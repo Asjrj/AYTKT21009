@@ -6,7 +6,9 @@ const anecdoteReducer = (store = [], action) => {
   if (action.type === 'VOTE') {
     const old = store.filter(a => a.id !== action.id)
     const voted = store.find(a => a.id === action.id)
-    const anecdotes = [...old, { ...voted, votes: voted.votes + 1 }]
+    const newVoted = { ...voted, votes: voted.votes + 1 }
+    const anecdotes = [...old, newVoted]
+    anecdoteService.updateAnecdote(newVoted)
     return anecdotes.sort((a, b) => a.votes > b.votes ? -1 : (a.votes < b.votes ? 1 : 0))
   }
   if (action.type === 'CREATE') {
@@ -15,7 +17,7 @@ const anecdoteReducer = (store = [], action) => {
     return [...store, newAnecdote]
   }
   if (action.type === 'INITIALIZE') {
-    return action.data
+    return action.data.sort((a, b) => a.votes > b.votes ? -1 : (a.votes < b.votes ? 1 : 0))
   }
 
   return store

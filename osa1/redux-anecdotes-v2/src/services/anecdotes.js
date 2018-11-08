@@ -10,5 +10,9 @@ const saveAnecdote = async (anecdote) => {
   return response.data
 }
 
+const updateAnecdote = async (anecdote) => {
+  const response = axios.put(`http://localhost:3001/anecdotes/${anecdote.id}`, anecdote)
+  return response.data
+}
 
-export default { getAll, saveAnecdote }
+export default { getAll, saveAnecdote, updateAnecdote }
