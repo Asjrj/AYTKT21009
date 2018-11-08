@@ -10,9 +10,8 @@ const anecdoteReducer = (store = [], action) => {
   if (action.type === 'CREATE') {
     return [...store, { content: action.content, id: getId(), votes: 0 }]
   }
-  if (action.type === 'NEW_ANECDOTE') {
-    console.log(action.data)
-    return [...store, action.data]
+  if (action.type === 'INITIALIZE') {
+    return action.data
   }
 
   return store
@@ -28,6 +27,12 @@ export const anecdoteCreation = (text) => {
   return {
     type: 'CREATE',
     content: text
+  }
+}
+export const anecdoteInitialization = (data) => {
+  return {
+    type: 'INITIALIZE',
+    data: data
   }
 }
 
