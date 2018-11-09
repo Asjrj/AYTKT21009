@@ -9,11 +9,21 @@ const Menu = () => (
   </div>
 )
 
+const notificationStyle = {
+  color: 'green',
+  fontFamily: 'Arial, Verdana',
+  fontSize: 16,
+  border: '1px solid black',
+  borderRadius: 10,
+  margin: 10,
+  padding: 5
+}
+
 const Notification = ({ notification }) => (
   <div>
     {notification
-      ? <p>{notification}</p>
-      : <p></p>
+      ? <div style={notificationStyle}>{notification}</div>
+      : <div></div>
     }
   </div>
 )
