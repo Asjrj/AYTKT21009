@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link, NavLink } from 'react-router-dom'
+import { Container, Table } from 'semantic-ui-react';
 
 const menuStyle = {
   fontFamily: 'Arial, Verdana',
@@ -40,7 +41,7 @@ const Notification = ({ notification }) => (
     }
   </div>
 )
-
+/*
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
@@ -52,7 +53,20 @@ const AnecdoteList = ({ anecdotes }) => (
     </ul>
   </div>
 )
-
+*/
+const AnecdoteList = ({ anecdotes }) => (
+  <div>
+    <h2>Anecdotes</h2>
+    <Table striped padded size='large'>
+      <Table.Body>
+        {anecdotes.map(anecdote =>
+          <Table.Row key={anecdote.id}>
+            <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
+          </Table.Row>)}
+      </Table.Body>
+    </Table>
+  </div>
+)
 const AnecdoteDetails = ({ anecdote }) => (
   <div>
     <h2>{anecdote.content}</h2>
@@ -191,7 +205,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <Router>
           <div>
             <h1>Software anecdotes</h1>
@@ -206,7 +220,7 @@ class App extends React.Component {
             <Footer />
           </div>
         </Router>
-      </div>
+      </Container>
     );
   }
 }
