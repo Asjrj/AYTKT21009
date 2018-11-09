@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link, NavLink } from 'react-router-dom'
-import { Container, Table } from 'semantic-ui-react';
+import { Container, Table, Grid, Image } from 'semantic-ui-react';
 
 const menuStyle = {
   fontFamily: 'Arial, Verdana',
@@ -41,19 +41,7 @@ const Notification = ({ notification }) => (
     }
   </div>
 )
-/*
-const AnecdoteList = ({ anecdotes }) => (
-  <div>
-    <h2>Anecdotes</h2>
-    <ul>
-      {anecdotes.map(anecdote =>
-        <li key={anecdote.id}>
-          <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
-        </li>)}
-    </ul>
-  </div>
-)
-*/
+
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
@@ -76,22 +64,31 @@ const AnecdoteDetails = ({ anecdote }) => (
   </div>
 )
 
+
 const About = () => (
   <div>
     <h2>About anecdote app</h2>
-    <p>According to Wikipedia:</p>
-
-    <em>An anecdote is a brief, revealing account of an individual person or an incident.
-      Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself,
-      such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative.
+    <Grid columns={2} divided>
+      <Grid.Row>
+        <Grid.Column width={12}>
+          <p>According to Wikipedia:</p>
+          <em>An anecdote is a brief, revealing account of an individual person or an incident.
+            Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself,
+            such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative.
       An anecdote is "a story with a point."</em>
-
-    <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
+          <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
+        </Grid.Column>
+        <Grid.Column width={4}>
+        <Image src='DennisRitchie.jpg' />
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   </div>
 )
 
 const Footer = () => (
   <div>
+    <br></br>
     Anecdote app for <a href='https://courses.helsinki.fi/fi/TKT21009/121540749'>Full Stack -sovelluskehitys</a>.
 
     See <a href='https://github.com/mluukkai/routed-anecdotes'>https://github.com/mluukkai/routed-anecdotes</a> for the source code.
