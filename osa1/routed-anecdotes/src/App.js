@@ -1,13 +1,13 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link, NavLink } from 'react-router-dom'
-import { Container, Table, Grid, Image } from 'semantic-ui-react';
+import { Container, Table, Grid, Image, Button, Header, Form } from 'semantic-ui-react';
 
 const menuStyle = {
   fontFamily: 'Arial, Verdana',
   color: 'green',
   backgroundColor: '#DDDDDD',
   fontSize: 16,
-  margin: 10,
+  marginBottom: 10,
   padding: 5
 }
 const activeMenuStyle = {
@@ -44,30 +44,31 @@ const Notification = ({ notification }) => (
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
-    <h2>Anecdotes</h2>
-    <Table striped padded size='large'>
+    <Header as='h2'>Anecdotes</Header>
+    <Table striped size='large'>
       <Table.Body>
         {anecdotes.map(anecdote =>
           <Table.Row key={anecdote.id}>
-            <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
+            <Table.Cell>
+              <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
+            </Table.Cell>
           </Table.Row>)}
       </Table.Body>
     </Table>
   </div>
 )
 const AnecdoteDetails = ({ anecdote }) => (
-  <div>
-    <h2>{anecdote.content}</h2>
+  <Container text>
+    <Header as='h2'>{anecdote.content}</Header>
     <p>has {anecdote.votes} votes</p>
     <p>{anecdote.author}</p>
-    <p>{anecdote.info}</p>
-  </div>
+    <a href={anecdote.info}>{anecdote.info}</a>
+  </Container>
 )
-
 
 const About = () => (
   <div>
-    <h2>About anecdote app</h2>
+    <Header as='h2'>About anecdote app</Header>
     <Grid columns={2} divided>
       <Grid.Row>
         <Grid.Column width={12}>
@@ -79,7 +80,7 @@ const About = () => (
           <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
         </Grid.Column>
         <Grid.Column width={4}>
-        <Image src='DennisRitchie.jpg' />
+          <Image src='DennisRitchie.jpg' />
         </Grid.Column>
       </Grid.Row>
     </Grid>
@@ -106,7 +107,6 @@ class CreateNew extends React.Component {
   }
 
   handleChange = (e) => {
-    console.log(e.target.name, e.target.value)
     this.setState({ [e.target.name]: e.target.value })
   }
 
@@ -125,25 +125,24 @@ class CreateNew extends React.Component {
   render() {
     return (
       <div>
-        <h2>create a new anecdote</h2>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            content
+        <Header as='h2'>Create a new anecdote</Header>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Field>
+            <label>Content</label>
             <input name='content' value={this.state.content} onChange={this.handleChange} />
-          </div>
-          <div>
-            author
+          </Form.Field>
+          <Form.Field>
+            <label>Author</label>
             <input name='author' value={this.state.author} onChange={this.handleChange} />
-          </div>
-          <div>
-            url for more info
+          </Form.Field>
+          <Form.Field>
+            <label>Url for more info</label>
             <input name='info' value={this.state.info} onChange={this.handleChange} />
-          </div>
-          <button>create</button>
-        </form>
+          </Form.Field>
+          <Button basic color='black'>Create</Button>
+        </Form>
       </div>
     )
-
   }
 }
 
@@ -200,12 +199,15 @@ class App extends React.Component {
     this.setState({ anecdotes })
   }
 
+  h1Style = {
+    marginTop: 10
+  }
   render() {
     return (
       <Container>
         <Router>
           <div>
-            <h1>Software anecdotes</h1>
+            <Header as='h1' style={this.h1Style}>Software anecdotes</Header>
             <Menu />
             <Notification notification={this.state.notification} />
             <Route exact path="/" render={() => <AnecdoteList anecdotes={this.state.anecdotes} />} />
@@ -217,9 +219,9 @@ class App extends React.Component {
             <Footer />
           </div>
         </Router>
-      </Container>
-    );
+      </Container >
+    )
   }
 }
 
-export default App;
+export default App
